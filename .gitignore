@@ -1,0 +1,57 @@
+# Build outputs
+bin/
+obj/
+
+# Visual Studio temporary files, build results, and
+# user-specific files
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Mac
+.DS_Store
+
+# Linux
+*~
+
+# Publish output
+publish/
+
+# Test results
+TestResults/
+
+# NuGet
+*.nupkg
+.nuget/
+project.lock.json
+
+# dotnet user secrets
+secrets.json
+
+# Logs
+*.log
+
+# Coverage
+coverage.opencover.xml
+coverage.cobertura.xml
+
+# Rider caches
+.idea/
+
+# Azure publish settings and profile
+*.Publish.xml
+
+# Ensure test project outputs under BloodMatchApi.Tests are not committed (if present)
+BloodMatchApi/BloodMatchApi.Tests/bin/
+BloodMatchApi/BloodMatchApi.Tests/obj/
+
+# End of file
