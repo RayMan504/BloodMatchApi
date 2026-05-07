@@ -4,28 +4,28 @@ using Microsoft.Extensions.Logging;
 namespace BloodMatchApi.Controllers;
 
 [Route("api/[controller]")]
-public class MatchController : ApiControllerBase
+public class BloodTypeController : ApiControllerBase
 {
     private readonly BloodMatchService _service;
 
-    public MatchController(BloodMatchService service, ILogger<MatchController> logger)
+    public BloodTypeController(BloodMatchService service, ILogger<BloodTypeController> logger)
         : base(logger)
     {
         _service = service;
     }
 
-    [HttpGet]
-    public IActionResult Check(string donor, string recipient)
+    [HttpGet("{bloodType}")]
+    public IActionResult Check(BloodType bloodType)
     {
-        _logger.LogInformation("Check requested with donor='{Donor}' recipient='{Recipient}'", donor, recipient);
+        _logger.LogInformation("Check requested with bloodType='{BloodType}'", bloodType);
 
-        if (string.IsNullOrWhiteSpace(donor) || string.IsNullOrWhiteSpace(recipient))
+        if (!Enum.IsDefined<BloodType>(bloodType))
         {
-            _logger.LogWarning("Invalid parameters: donor='{Donor}', recipient='{Recipient}'", donor, recipient);
-            return Error("Both donor and recipient blood types must be provided.", 400);
+            _logger.LogWarning("Invalid parameters: bloodType='{BloodType}'", bloodType);
+            return Error("A blood type must be provided.", 400);
         }
 
-        var result = _service.IsMatch(donor, recipient);
+        var result = _service.GetBloodTypeMatch(bloodType);
         return OkEnvelope(new { match = result });
     }
 }

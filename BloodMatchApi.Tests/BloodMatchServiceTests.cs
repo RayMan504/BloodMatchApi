@@ -1,3 +1,4 @@
+using System.Linq;
 using Xunit;
 
 public class BloodMatchServiceTests
@@ -7,25 +8,27 @@ public class BloodMatchServiceTests
     {
         var service = new BloodMatchService();
 
-        var compat = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>()
+        var compat = new System.Collections.Generic.Dictionary<BloodType, System.Collections.Generic.List<string>>()
         {
-            ["O-"] = new() { "O-" },
-            ["O+"] = new() { "O-", "O+" },
-            ["A-"] = new() { "O-", "A-" },
-            ["A+"] = new() { "O-", "O+", "A-", "A+" },
-            ["B-"] = new() { "O-", "B-" },
-            ["B+"] = new() { "O-", "O+", "B-", "B+" },
-            ["AB-"] = new() { "O-", "A-", "B-", "AB-" },
-            ["AB+"] = new() { "O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+" }
+            [BloodType.ON] = new() { "O-" },
+            [BloodType.OP] = new() { "O-", "O+" },
+            [BloodType.AN] = new() { "O-", "A-" },
+            [BloodType.AP] = new() { "O-", "O+", "A-", "A+" },
+            [BloodType.BN] = new() { "O-", "B-" },
+            [BloodType.BP] = new() { "O-", "O+", "B-", "B+" },
+            [BloodType.ABN] = new() { "O-", "A-", "B-", "AB-" },
+            [BloodType.ABP] = new() { "O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+" }
         };
 
-        var allTypes = new System.Collections.Generic.HashSet<string>(compat.Keys);
-        // also include donors that appear in lists (should be same set but safer)
-        foreach (var list in compat.Values) foreach (var d in list) allTypes.Add(d);
+        // recipients: enum values
+        var recipients = compat.Keys;
 
-        foreach (var recipient in allTypes)
+        // donors: all unique donor strings used in the compatibility lists
+        var donors = new System.Collections.Generic.HashSet<string>(compat.Values.SelectMany(list => list));
+
+        foreach (var recipient in recipients)
         {
-            foreach (var donor in allTypes)
+            foreach (var donor in donors)
             {
                 var expected = compat.ContainsKey(recipient) && compat[recipient].Contains(donor);
                 var actual = service.IsMatch(donor, recipient);
@@ -33,4 +36,30 @@ public class BloodMatchServiceTests
             }
         }
     }
+
+    [Fact]
+    public void GetCompatibleDonors_ReturnsExpectedLists()
+    {
+        var service = new BloodMatchService();
+
+        var compat = new System.Collections.Generic.Dictionary<BloodType, System.Collections.Generic.List<string>>()
+        {
+            [BloodType.ON] = new() { "O-" },
+            [BloodType.OP] = new() { "O-", "O+" },
+            [BloodType.AN] = new() { "O-", "A-" },
+            [BloodType.AP] = new() { "O-", "O+", "A-", "A+" },
+            [BloodType.BN] = new() { "O-", "B-" },
+            [BloodType.BP] = new() { "O-", "O+", "B-", "B+" },
+            [BloodType.ABN] = new() { "O-", "A-", "B-", "AB-" },
+            [BloodType.ABP] = new() { "O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+" }
+        };
+
+        foreach (var recipient in compat.Keys)
+        {
+            var expected = compat[recipient];
+            var actual = service.GetBloodTypeMatch(recipient);
+            Assert.Equal(expected, actual);
+        }
+    }
+
 }
