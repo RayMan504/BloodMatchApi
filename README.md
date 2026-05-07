@@ -38,7 +38,7 @@ Then open `http://localhost:5000/swagger` (or check output for the exact URL) to
 Example request (curl):
 
 ```bash
-curl "http://localhost:5127/api/BloodMatch/check?donor=O%2D&recipient=AB%2B"
+curl "http://localhost:5127/api/bloodtype/abp"
 ```
 
 ## Tests
@@ -46,11 +46,7 @@ curl "http://localhost:5127/api/BloodMatch/check?donor=O%2D&recipient=AB%2B"
 Run the test suite from the repository root (solution or test project):
 
 ```bash
-# using solution
-dotnet test BloodMatch.sln
-
-# or directly
-dotnet test BloodMatchApi/BloodMatchApi.Tests/BloodMatchApi.Tests.csproj
+dotnet test BloodMatchApi/BloodMatchApi.Tests
 ```
 
 ## Docker (optional)
@@ -100,17 +96,3 @@ az webapp create --resource-group my-rg --plan my-plan --name my-unique-app-name
 dotnet publish -c Release -o publish
 az webapp deploy --resource-group my-rg --name my-unique-app-name --src-path ./publish
 ```
-
-### GitHub Actions / CI
-
-I can scaffold a GitHub Actions workflow that runs build, tests, and deploys to Azure Web App using the `azure/webapps-deploy` action. If you'd like that, tell me the desired app name and whether you want to use a publish profile or service principal.
-
-## Notes & suggestions
-
-- Add a `/health` endpoint for App Service health probes.
-- Use App Settings (Azure Portal) or Key Vault for any secrets instead of appsettings.json.
-- The project is intentionally small and minimal; expand tests to include edge cases (empty/null inputs).
-
----
-
-If you want, I can add the GitHub Actions workflow now or add the `Dockerfile` to the repo and commit it.
