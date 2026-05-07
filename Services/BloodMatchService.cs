@@ -1,18 +1,21 @@
 public class BloodMatchService
 {
-    private static readonly Dictionary<string, List<string>> Compat = new()
+    private static readonly Dictionary<BloodType, List<string>> Compat = new()
     {
-        ["O-"] = new() { "O-" },
-        ["O+"] = new() { "O-", "O+" },
-        ["A-"] = new() { "O-", "A-" },
-        ["A+"] = new() { "O-", "O+", "A-", "A+" },
-        ["B-"] = new() { "O-", "B-" },
-        ["B+"] = new() { "O-", "O+", "B-", "B+" },
-        ["AB-"] = new() { "O-", "A-", "B-", "AB-" },
-        ["AB+"] = new() { "O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+" }
+        [BloodType.ON] = new() { "O-" },
+        [BloodType.OP] = new() { "O-", "O+" },
+        [BloodType.AN] = new() { "O-", "A-" },
+        [BloodType.AP] = new() { "O-", "O+", "A-", "A+" },
+        [BloodType.BN] = new() { "O-", "B-" },
+        [BloodType.BP] = new() { "O-", "O+", "B-", "B+" },
+        [BloodType.ABN] = new() { "O-", "A-", "B-", "AB-" },
+        [BloodType.ABP] = new() { "O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+" }
     };
 
     // check if the donor blood type is compatible with the recipient blood type
-    public bool IsMatch(string donor, string recipient)
+    public bool IsMatch(string donor, BloodType recipient)
         => Compat.ContainsKey(recipient) && Compat[recipient].Contains(donor);
+
+    public List<string> GetBloodTypeMatch(BloodType bloodType)
+        => Compat.ContainsKey(bloodType) ? Compat[bloodType] : new List<string>();
 }
