@@ -80,8 +80,8 @@ az login
 2. Create resource group and app service plan (example):
 
 ```bash
-az group create --name my-rg --location westeurope
-az appservice plan create --name my-plan --resource-group my-rg --sku B1
+az group create --name my-rg --location eastus
+az appservice plan create --name my-plan --resource-group my-rg --sku F1
 ```
 
 3. Create the web app (replace `my-unique-app-name`):
