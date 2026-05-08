@@ -1,6 +1,8 @@
-@BloodMatchApi_HostAddress = http://localhost:5127
-
-GET {{BloodMatchApi_HostAddress}}/
+@BloodMatchApi_LocalHostAddress = http://localhost:5127
+GET {{BloodMatchApi_LocalHostAddress}}/
 Accept: application/json
 
 ###
+@BloodMatchApi_AzureAddress = https://bloodmatchapi.azurewebsites.net
+GET {{BloodMatchApi_AzureAddress}}/
+Accept: application/json
