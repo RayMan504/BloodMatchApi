@@ -54,4 +54,6 @@ coverage.cobertura.xml
 BloodMatchApi/BloodMatchApi.Tests/bin/
 BloodMatchApi/BloodMatchApi.Tests/obj/
 
+# zip files
+*.zip
 # End of file
