@@ -16,5 +16,4 @@
     <Compile Remove="BloodMatchApi.Tests\**\*.cs" />
     <None Remove="BloodMatchApi.Tests\**\*.*" />
   </ItemGroup>
-
 </Project>
