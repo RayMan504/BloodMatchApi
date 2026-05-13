@@ -62,4 +62,15 @@ public class BloodMatchServiceTests
         }
     }
 
+    [Fact]
+    public void GetSupportedBloodTypes_ReturnsAllEnumNames()
+    {
+        var service = new BloodMatchService();
+        var expected = Enum.GetNames<BloodType>();
+
+        var actual = service.GetSupportedBloodTypes();
+
+        Assert.Equal(expected, actual);
+    }
+
 }
