@@ -1,31 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace BloodMatchApi.Controllers;
 
 [ApiController]
 [Route("/")]
-public class HomeController : ApiControllerBase
+public class HomeController : Controller
     {
-    public HomeController(ILogger<HomeController> logger) : base(logger)
+    private readonly ILogger<HomeController> _logger;
+
+    public HomeController(ILogger<HomeController> logger)
     {
+        _logger = logger;
     }
 
     [HttpGet]
-        public IActionResult Get()
+        public IActionResult Index()
         {
-            var items = new[]
+            var items = new List<SelectListItem>
             {
-                new { id = 1, name = BloodType.ABN.ToString() },
-                new { id = 2, name = BloodType.ABP.ToString() },
-                new { id = 3, name = BloodType.AP.ToString() },
-                new { id = 4, name = BloodType.AN.ToString() },
-                new { id = 5, name = BloodType.BP.ToString() },
-                new { id = 6, name = BloodType.BN.ToString() },
-                new { id = 7, name = BloodType.OP.ToString() },
-                new { id = 8, name = BloodType.ON.ToString() },
+                new SelectListItem { Value = BloodType.ABN.ToString(), Text = BloodType.ABN.ToString() },
+                new SelectListItem { Value = BloodType.ABP.ToString(), Text = BloodType.ABP.ToString() },
+                new SelectListItem { Value = BloodType.AP.ToString(), Text = BloodType.AP.ToString() },
+                new SelectListItem { Value = BloodType.AN.ToString(), Text = BloodType.AN.ToString() },
+                new SelectListItem { Value = BloodType.BP.ToString(), Text = BloodType.BP.ToString() },
+                new SelectListItem { Value = BloodType.BN.ToString(), Text = BloodType.BN.ToString() },
+                new SelectListItem { Value = BloodType.OP.ToString(), Text = BloodType.OP.ToString() },
+                new SelectListItem { Value = BloodType.ON.ToString(), Text = BloodType.ON.ToString() },
             };
 
-            return Ok(items);
+            // pass the list of items to the view
+            ViewBag.BloodTypes = items;
+            return View();
         }
     }

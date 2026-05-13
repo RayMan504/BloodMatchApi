@@ -1,0 +1,10 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<select name="bloodType">
+    <option value="">Select Blood Type</option>
+
+    @foreach (SelectListItem item in ViewBag.BloodTypes)
+    {
+        <option value="@item.Value">@item.Text</option>
+    }
+</select>
