@@ -4,14 +4,22 @@ using Microsoft.Extensions.Logging;
 namespace BloodMatchApi.Controllers;
 
 [Route("api/[controller]")]
-public class BloodTypeController : ApiControllerBase
+public class MatchController : ApiControllerBase
 {
     private readonly BloodMatchService _service;
 
-    public BloodTypeController(BloodMatchService service, ILogger<BloodTypeController> logger)
+    public MatchController(BloodMatchService service, ILogger<MatchController> logger)
         : base(logger)
     {
         _service = service;
+    }
+
+    [HttpGet("types")]
+    public IActionResult GetValidBloodTypes()
+    {
+        _logger.LogInformation("Valid blood types requested");
+        var types = _service.GetSupportedBloodTypes();
+        return OkEnvelope(new { types });
     }
 
     [HttpGet("{bloodType}")]

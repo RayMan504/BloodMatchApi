@@ -36,20 +36,12 @@ dotnet run --project ./
 
 Then open `http://localhost:5000/swagger` (or check output for the exact URL) to try the endpoints.
 
-### Home page dropdown
 
-Open the app root at `http://localhost:5127/` and select a blood type from the dropdown. The page will trigger an API call to:
-
-```text
-/api/bloodtype/{bloodType}
-```
-
-For example, selecting `ABP` will navigate to `/api/bloodtype/ABP` and return the blood match result.
-
-Example request (curl):
+Example requests (curl):
 
 ```bash
-curl "http://localhost:5127/api/bloodtype/abp"
+curl "http://localhost:5127/api/match/types"
+curl "http://localhost:5127/api/match/abp"
 ```
 
 ## Tests

@@ -18,4 +18,7 @@ public class BloodMatchService
 
     public List<string> GetBloodTypeMatch(BloodType bloodType)
         => Compat.ContainsKey(bloodType) ? Compat[bloodType] : new List<string>();
+
+    public IReadOnlyList<string> GetSupportedBloodTypes()
+        => Enum.GetNames<BloodType>();
 }
