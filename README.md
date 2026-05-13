@@ -9,6 +9,7 @@ This repository contains a minimal .NET 8.0 Web API and a small xUnit test proje
 - `Program.cs` - minimal Web API host and endpoint wiring
 - `Controllers/` - controllers including `BloodMatchController` and a reusable `ApiControllerBase`
 - `Services/BloodMatchService.cs` - business logic for compatibility
+- `Views/` - minimal html views
 - `Models/` - simple model classes
 - `BloodMatchApi.Tests/` - xUnit tests for the service
 
@@ -34,6 +35,16 @@ dotnet run --project ./
 ```
 
 Then open `http://localhost:5000/swagger` (or check output for the exact URL) to try the endpoints.
+
+### Home page dropdown
+
+Open the app root at `http://localhost:5127/` and select a blood type from the dropdown. The page will trigger an API call to:
+
+```text
+/api/bloodtype/{bloodType}
+```
+
+For example, selecting `ABP` will navigate to `/api/bloodtype/ABP` and return the blood match result.
 
 Example request (curl):
 
@@ -80,7 +91,7 @@ az login
 2. Create resource group and app service plan (example):
 
 ```bash
-az group create --name my-rg --location eastus
+az group create --name my-rg --location westeurope
 az appservice plan create --name my-plan --resource-group my-rg --sku F1
 ```
 

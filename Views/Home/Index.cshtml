@@ -1,0 +1,11 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@* route to appropiate API endpoint based on selected blood type *@
+<select onchange="if(this.value) location.href='/api/bloodtype/' + encodeURIComponent(this.value)" name="bloodType">
+    <option value="">Select Blood Type</option>
+
+    @foreach (SelectListItem item in ViewBag.BloodTypes)
+    {
+        <option value="@item.Value">@item.Text</option>
+    }
+</select>
