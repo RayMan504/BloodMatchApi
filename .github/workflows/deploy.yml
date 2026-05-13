@@ -22,13 +22,13 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore BloodMatchApi.csproj
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build BloodMatchApi.csproj --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish -c Release -o publish
+        run: dotnet publish BloodMatchApi.csproj -c Release -o publish
 
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v3
