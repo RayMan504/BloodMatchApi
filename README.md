@@ -22,7 +22,7 @@ This repository contains a minimal .NET 8.0 Web API and a small xUnit test proje
 From the repository root:
 
 ```bash
-dotnet build
+dotnet build BloodMatchApi.csproj
 ```
 
 ## Run (local)
@@ -30,7 +30,7 @@ dotnet build
 Run the API locally:
 
 ```bash
-dotnet run --project ./
+dotnet run
 ```
 
 Then open `http://localhost:5000/swagger` (or check output for the exact URL) to try the endpoints.
@@ -39,8 +39,8 @@ Then open `http://localhost:5000/swagger` (or check output for the exact URL) to
 Example requests (curl):
 
 ```bash
-curl "http://localhost:5127/api/match/types"
-curl "http://localhost:5127/api/match/abp"
+curl "http://localhost:5127/api/match/types" // view list of valid blood types
+curl "http://localhost:5127/api/match/abp"  // view list of compatible blood types to donate to
 ```
 
 ## Tests
