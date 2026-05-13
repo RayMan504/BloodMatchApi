@@ -3,7 +3,7 @@ name: Deploy to Azure App Service
 on:
   pull_request:
     branches:
-      - main
+      - master
     types:
       - closed
 
