@@ -22,15 +22,15 @@ public class MatchController : ApiControllerBase
         return OkEnvelope(new { types });
     }
 
-    [HttpGet("{bloodType}")]
-    public IActionResult Check(BloodType bloodType)
+    [HttpGet("{role}/{bloodType}")]
+    public IActionResult Check(Role role, BloodType bloodType)
     {
         _logger.LogInformation("Check requested with bloodType='{BloodType}'", bloodType);
 
-        if (!Enum.IsDefined<BloodType>(bloodType))
+        if (!Enum.IsDefined<BloodType>(bloodType) && !Enum.IsDefined<Role>(role))
         {
-            _logger.LogWarning("Invalid parameters: bloodType='{BloodType}'", bloodType);
-            return Error("A blood type must be provided.", 400);
+            _logger.LogWarning("Invalid parameters: bloodType='{BloodType}', role='{Role}'", bloodType, role);
+            return Error("A valid blood type and role must be provided.", 400);
         }
 
         var result = _service.GetBloodTypeMatch(bloodType);

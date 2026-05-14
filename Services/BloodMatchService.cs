@@ -16,8 +16,13 @@ public class BloodMatchService
     public bool IsMatch(string donor, BloodType recipient)
         => Compat.ContainsKey(recipient) && Compat[recipient].Contains(donor);
 
-    public List<string> GetBloodTypeMatch(BloodType bloodType)
-        => Compat.ContainsKey(bloodType) ? Compat[bloodType] : new List<string>();
+    public List<string> GetBloodTypeMatch(Role role, BloodType bloodType)
+    {
+        // if user is recipient
+            // constant time acesss to compatible blood types
+        // if user is donor
+            // linear time access to compatible blood types by iterating through dictionary and checking if donor blood type is in the list of compatible blood types for each recipient blood type
+    }
 
     public IReadOnlyList<string> GetSupportedBloodTypes()
         => Enum.GetNames<BloodType>();
