@@ -33,7 +33,7 @@ public class MatchController : ApiControllerBase
             return Error("A valid blood type and role must be provided.", 400);
         }
 
-        var result = _service.GetBloodTypeMatch(bloodType);
+        var result = _service.GetBloodTypeMatch(role, bloodType);
         return OkEnvelope(new { match = result });
     }
 }
