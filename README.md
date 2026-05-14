@@ -9,7 +9,6 @@ This repository contains a minimal .NET 8.0 Web API and a small xUnit test proje
 - `Program.cs` - minimal Web API host and endpoint wiring
 - `Controllers/` - controllers including `BloodMatchController` and a reusable `ApiControllerBase`
 - `Services/BloodMatchService.cs` - business logic for compatibility
-- `Models/` - simple model classes
 - `BloodMatchApi.Tests/` - xUnit tests for the service
 
 ## Requirements
