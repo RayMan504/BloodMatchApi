@@ -18,7 +18,7 @@ public class HomeController : Controller
     [HttpGet]
         public IActionResult Index()
         {
-            
-            return Content("BloodMatch API is running after latest deployment. Use /api/match/{bloodtype} to find blood matches. For valid blood types use /api/match/types");
+            // for simplicity, we will just return a message with instructions on how to use the API
+            return Content("Welcome! BloodMatch API is running after latest deployment. Use /api/match/donor_or_recipient/target_blood_type to find blood matches. To view valid blood types list use /api/match/types");
         }
     }

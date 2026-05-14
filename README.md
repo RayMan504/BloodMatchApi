@@ -9,7 +9,6 @@ This repository contains a minimal .NET 8.0 Web API and a small xUnit test proje
 - `Program.cs` - minimal Web API host and endpoint wiring
 - `Controllers/` - controllers including `BloodMatchController` and a reusable `ApiControllerBase`
 - `Services/BloodMatchService.cs` - business logic for compatibility
-- `Models/` - simple model classes
 - `BloodMatchApi.Tests/` - xUnit tests for the service
 
 ## Requirements
@@ -40,7 +39,9 @@ Example requests (curl):
 
 ```bash
 curl "http://localhost:5127/api/match/types" // view list of valid blood types
-curl "http://localhost:5127/api/match/abp"  // view list of compatible blood types to donate to
+curl "http://localhost:5127/api/match/donor/abp"  // view list of compatible blood types you can donate to
+curl "http://localhost:5127/api/match/recipient/abp"  // view list of compatible blood types you can receive
+
 ```
 
 ## Tests

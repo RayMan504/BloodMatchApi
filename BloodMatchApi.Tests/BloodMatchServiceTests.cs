@@ -1,5 +1,6 @@
 using System.Linq;
 using Xunit;
+using System;
 
 public class BloodMatchServiceTests
 {
@@ -10,14 +11,14 @@ public class BloodMatchServiceTests
 
         var compat = new System.Collections.Generic.Dictionary<BloodType, System.Collections.Generic.List<string>>()
         {
-            [BloodType.ON] = new() { "O-" },
-            [BloodType.OP] = new() { "O-", "O+" },
-            [BloodType.AN] = new() { "O-", "A-" },
-            [BloodType.AP] = new() { "O-", "O+", "A-", "A+" },
-            [BloodType.BN] = new() { "O-", "B-" },
-            [BloodType.BP] = new() { "O-", "O+", "B-", "B+" },
-            [BloodType.ABN] = new() { "O-", "A-", "B-", "AB-" },
-            [BloodType.ABP] = new() { "O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+" }
+            [BloodType.ON] = new() { BloodType.ON.ToString() },
+            [BloodType.OP] = new() { BloodType.ON.ToString(), BloodType.OP.ToString() },
+            [BloodType.AN] = new() { BloodType.ON.ToString(), BloodType.AN.ToString() },
+            [BloodType.AP] = new() { BloodType.ON.ToString(), BloodType.OP.ToString(), BloodType.AN.ToString(), BloodType.AP.ToString() },
+            [BloodType.BN] = new() { BloodType.ON.ToString(), BloodType.BN.ToString() },
+            [BloodType.BP] = new() { BloodType.ON.ToString(), BloodType.OP.ToString(), BloodType.BN.ToString(), BloodType.BP.ToString() },
+            [BloodType.ABN] = new() { BloodType.ON.ToString(), BloodType.AN.ToString(), BloodType.BN.ToString(), BloodType.ABN.ToString() },
+            [BloodType.ABP] = new() { BloodType.ON.ToString(), BloodType.OP.ToString(), BloodType.AN.ToString(), BloodType.AP.ToString(), BloodType.BN.ToString(), BloodType.BP.ToString(), BloodType.ABN.ToString(), BloodType.ABP.ToString() }
         };
 
         // recipients: enum values
@@ -31,7 +32,7 @@ public class BloodMatchServiceTests
             foreach (var donor in donors)
             {
                 var expected = compat.ContainsKey(recipient) && compat[recipient].Contains(donor);
-                var actual = service.IsMatch(donor, recipient);
+                var actual = service.IsMatch(Enum.Parse<BloodType>(donor), recipient);
                 Assert.Equal(expected, actual);
             }
         }
@@ -44,31 +45,31 @@ public class BloodMatchServiceTests
 
         var compat = new System.Collections.Generic.Dictionary<BloodType, System.Collections.Generic.List<string>>()
         {
-            [BloodType.ON] = new() { "O-" },
-            [BloodType.OP] = new() { "O-", "O+" },
-            [BloodType.AN] = new() { "O-", "A-" },
-            [BloodType.AP] = new() { "O-", "O+", "A-", "A+" },
-            [BloodType.BN] = new() { "O-", "B-" },
-            [BloodType.BP] = new() { "O-", "O+", "B-", "B+" },
-            [BloodType.ABN] = new() { "O-", "A-", "B-", "AB-" },
-            [BloodType.ABP] = new() { "O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+" }
+            [BloodType.ON] = new() { BloodType.ON.ToString() },
+            [BloodType.OP] = new() { BloodType.ON.ToString(), BloodType.OP.ToString() },
+            [BloodType.AN] = new() { BloodType.ON.ToString(), BloodType.AN.ToString() },
+            [BloodType.AP] = new() { BloodType.ON.ToString(), BloodType.OP.ToString(), BloodType.AN.ToString(), BloodType.AP.ToString() },
+            [BloodType.BN] = new() { BloodType.ON.ToString(), BloodType.BN.ToString() },
+            [BloodType.BP] = new() { BloodType.ON.ToString(), BloodType.OP.ToString(), BloodType.BN.ToString(), BloodType.BP.ToString() },
+            [BloodType.ABN] = new() { BloodType.ON.ToString(), BloodType.AN.ToString(), BloodType.BN.ToString(), BloodType.ABN.ToString() },
+            [BloodType.ABP] = new() { BloodType.ON.ToString(), BloodType.OP.ToString(), BloodType.AN.ToString(), BloodType.AP.ToString(), BloodType.BN.ToString(), BloodType.BP.ToString(), BloodType.ABN.ToString(), BloodType.ABP.ToString() }
         };
 
-        foreach (var recipient in compat.Keys)
+        foreach (var bloodType in compat.Keys)
         {
-            var expected = compat[recipient];
-            var actual = service.GetBloodTypeMatch(recipient);
+            var expected = compat[bloodType].OrderBy(x => x).ToList();
+            var actual = service.GetBloodTypeMatch(Role.Recipient, bloodType).OrderBy(x => x).ToList();
             Assert.Equal(expected, actual);
         }
     }
 
     [Fact]
-    public void GetSupportedBloodTypes_ReturnsAllEnumNames()
+    public void GetSupportedBloodTypes_ReturnsAllEnumStringValues()
     {
         var service = new BloodMatchService();
-        var expected = Enum.GetNames<BloodType>();
+        var expected = Enum.GetValues<BloodType>().Select(bt => bt.ToString()).ToList();
 
-        var actual = service.GetSupportedBloodTypes();
+        var actual = service.GetSupportedBloodTypes().Select(bt => bt.ToString()).ToList();
 
         Assert.Equal(expected, actual);
     }
