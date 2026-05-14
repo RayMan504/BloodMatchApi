@@ -40,7 +40,9 @@ Example requests (curl):
 
 ```bash
 curl "http://localhost:5127/api/match/types" // view list of valid blood types
-curl "http://localhost:5127/api/match/abp"  // view list of compatible blood types to donate to
+curl "http://localhost:5127/api/match/donor/abp"  // view list of compatible blood types you can donate to
+curl "http://localhost:5127/api/match/recipient/abp"  // view list of compatible blood types you can receive
+
 ```
 
 ## Tests
